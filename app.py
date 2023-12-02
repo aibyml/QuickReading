@@ -22,7 +22,7 @@ from langchain.vectorstores import FAISS
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
-st.header("Good Evening...Classmate, it is difficult to study part-time, understand the book with this tool may help")
+st.header("Good Evening...Classmates, difficult to study in part-time, understand the content of book with this tool may help")
 
 #The below snippet helps us to import structured pdf file data for our tasks
 from langchain.document_loaders import PyPDFDirectoryLoader
@@ -87,7 +87,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("For example: what are the social background? ", key = input)
+    input_text = st.text_input("For example: Summarise the provincial organization? ", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - Pinecone
