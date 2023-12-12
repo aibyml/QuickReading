@@ -1,5 +1,5 @@
 ---
-title: NTBkReport
+title: BkReport
 emoji: 📊
 colorFrom: blue
 colorTo: gray
