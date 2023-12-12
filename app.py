@@ -122,7 +122,6 @@ if submit:
     st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
-        st.write(response)
         st.session_state.prompt_history.append(input_text + "  Answer: " + response)
 
 st.subheader("Prompt history:")
