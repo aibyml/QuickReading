@@ -22,7 +22,7 @@ from langchain.vectorstores import FAISS
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
-st.header("Good Evening...Classmates, difficult to study in part-time, understand the content of book with this tool may help")
+st.header("Good Evening...part-time students, this app help you to understand the content of any readings")
 
 #The below snippet helps us to import structured pdf file data for our tasks
 from langchain.document_loaders import PyPDFDirectoryLoader
