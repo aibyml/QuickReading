@@ -8,6 +8,10 @@ from langchain import HuggingFaceHub
 import pypdf
 import os
 
+#By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
+st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
+st.header("Good Evening...part-time students, this app help you to understand the content of any readings")
+
 if "openai_key" not in st.session_state:
     with st.form("API key"):
         key = st.text_input("OpenAI Key", value="", type="password")
@@ -27,10 +31,6 @@ from langchain.embeddings import OpenAIEmbeddings
 #clustering of large-scale datasets, particularly with high-dimensional vectors. 
 #It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
 from langchain.vectorstores import FAISS
-
-#By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
-st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
-st.header("Good Evening...part-time students, this app help you to understand the content of any readings")
 
 #The below snippet helps us to import structured pdf file data for our tasks
 from langchain.document_loaders import PyPDFDirectoryLoader
