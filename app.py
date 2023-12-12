@@ -8,6 +8,14 @@ from langchain import HuggingFaceHub
 import pypdf
 import os
 
+if "openai_key" not in st.session_state:
+    with st.form("API key"):
+        key = st.text_input("OpenAI Key", value="", type="password")
+        if st.form_submit_button("Submit"):
+            st.session_state.openai_key = key
+            st.session_state.prompt_history = []
+            st.success('Saved API key for this session.')
+
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
 # Generate Text Embedding using different LLM
@@ -113,3 +121,13 @@ if submit:
     response = get_answer(input_text)
     st.subheader("Answer:")
     st.write(response,key= 1)
+    if response is not None:
+        st.write(response)
+        st.session_state.prompt_history.append(input_text + "  Answer: " + response)
+
+st.subheader("Prompt history:")
+st.write(st.session_state.prompt_history)
+
+if st.button("Clear"):
+    st.session_state.prompt_history = []
+    docs = None
