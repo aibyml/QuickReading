@@ -14,11 +14,11 @@ st.header("Good Evening...part-time students, this app help you to understand th
 st.session_state.prompt_history = []
 
 if "openai_key" not in st.session_state:
-    with st.form("API key"):
-        key = st.text_input("OpenAI Key", value="", type="password")
-        if st.form_submit_button("Submit"):
-            st.session_state.openai_key = key
-            st.success('Saved API key for this session.')
+    #with st.form("API key"):
+        #key = st.text_input("OpenAI Key", value="", type="password")
+        #if st.form_submit_button("Submit"):
+   st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
+            #st.success('Saved API key for this session.')
 
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
