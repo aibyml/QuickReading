@@ -12,7 +12,7 @@ import os
 st.set_page_config(page_title="Learning", page_icon=":robot:")
 st.header("Good Evening...students, this app help you to understand the content of any readings")
 st.session_state.prompt_history = []
-doc = []
+docs = []
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
         #key = st.text_input("OpenAI Key", value="", type="password")
@@ -64,13 +64,11 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
   
 directory = 'data'
 documents = load_docs(directory)
-st.write(len(documents))
 docs = split_docs(documents)
 st.write("Approx number of token", len(docs))
     
 if st.button ("upload docs"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    st.write(len(documents))
     docs = split_docs(documents)
     st.write("Approx number of token", len(docs))
 
