@@ -62,7 +62,6 @@ documents = load_docs(directory)
 if st.button("Upload docs"): 
 
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
-    submit=st.button("Help me base on the doc to help me understand the content")
 
 st.write("Approx number of token", len(documents))
 
