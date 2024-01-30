@@ -56,14 +56,15 @@ def load_docspdf(directory):
 #Assigning the data inside the pdf to our variable here
 # Passing the directory to the 'load_docs' function or Get the doc
   
-directory = 'data'
-documents = load_docs(directory)
-
 if st.button("Upload docs"): 
 
    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
 
-#st.write("Approx number of token", len(documents))
+else:
+    directory = 'data'
+    documents = load_docs(directory)
+
+    #st.write("Approx number of token", len(documents))
 
 #This function will split the documents into chunks
 from langchain.text_splitter import RecursiveCharacterTextSplitter
