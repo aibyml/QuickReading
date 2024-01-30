@@ -59,9 +59,9 @@ def load_docspdf(directory):
 directory = 'data'
 documents = load_docs(directory)
 
-#if st.button("Upload docs"): 
+if st.button("Upload docs"): 
 
-#    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
+   documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
 
 st.write("Approx number of token", len(documents))
 
