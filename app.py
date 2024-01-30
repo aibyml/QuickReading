@@ -56,13 +56,12 @@ def load_docspdf(directory):
 #Assigning the data inside the pdf to our variable here
 # Passing the directory to the 'load_docs' function or Get the doc
   
-if st.button("Upload docs"): 
+if st.button("database docs"): 
 
-   documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
-
-else:
     directory = 'data'
     documents = load_docs(directory)
+
+documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
 
 st.write("Approx number of token", len(documents))
 
