@@ -73,7 +73,6 @@ if st.button ("upload docs"):
     docs = split_docs(documents)
     st.write("Approx number of token", len(docs))
 
-
 # Initialize the OpenAIEmbeddings object
 # Using OpenAI specified models
 #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
@@ -82,12 +81,11 @@ if st.button ("upload docs"):
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 embed = st.button("Embedding")  
-
-if embed:
+with embed:
     embeddings = OpenAIEmbeddings()
-  
-#Store and Index vector space
-db = FAISS.from_documents(docs, embeddings)
+      
+    #Store and Index vector space
+    db = FAISS.from_documents(docs, embeddings)
 
 # LLM Q&A Code
 from langchain.llms import OpenAI
