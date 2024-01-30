@@ -13,6 +13,7 @@ st.set_page_config(page_title="Learning", page_icon=":robot:")
 st.header("Good Evening...students, this app help you to understand the content of any readings")
 st.session_state.prompt_history = []
 docs = []
+db = []
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
         #key = st.text_input("OpenAI Key", value="", type="password")
