@@ -10,7 +10,7 @@ import os
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
-st.header("Good Evening...part-time students, this app help you to understand the content of any readings")
+st.header("Good Evening...students, this app help you to understand the content of any readings")
 st.session_state.prompt_history = []
 
 if "openai_key" not in st.session_state:
