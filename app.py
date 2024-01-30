@@ -70,7 +70,7 @@ if st.button("database docs"):
     docs = split_docs(documents)
     st.write("Approx number of token", len(docs))
     
-if st.button ("upload docs")
+if st.button ("upload docs"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
     st.write(len(documents))
     docs = split_docs(documents)
