@@ -2,7 +2,7 @@
 #It provides functions for creating UIs, displaying data, and handling user inputs.
 import streamlit as st
 from langchain import HuggingFaceHub
-
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 #This module provides a way to interact with the operating system, such as accessing environment variables, working with files
 #and directories, executing shell commands, etc
 import pypdf
@@ -52,27 +52,31 @@ def load_docspdf(directory):
             loader = PyPDFDirectoryLoader(directory)
             documents = loader.load()
     return documents
-    
-#Assigning the data inside the pdf to our variable here
+
+#This function will split the documents into chunks
+def split_docs(documents, chunk_size=3000, chunk_overlap=20):
+      text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+      docs = text_splitter.split_documents(documents)
+      return docs
+
+# Assigning the data inside the pdf to our variable here
 # Passing the directory to the 'load_docs' function or Get the doc
   
 if st.button("database docs"): 
 
     directory = 'data'
     documents = load_docs(directory)
+    st.write(len(documents))
+    docs = split_docs(documents)
+    st.write("Approx number of token", len(docs))
+    
+if st.button ("upload docs")
+    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    st.write(len(documents))
+    docs = split_docs(documents)
+    st.write("Approx number of token", len(docs))
 
-documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
 
-#This function will split the documents into chunks
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
-def split_docs(documents, chunk_size=3000, chunk_overlap=20):
-  text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-  docs = text_splitter.split_documents(documents)
-  return docs
-
-docs = split_docs(documents)
-st.write("Approx number of token", len(docs))
 # Initialize the OpenAIEmbeddings object
 # Using OpenAI specified models
 #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
