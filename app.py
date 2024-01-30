@@ -5,7 +5,7 @@ from langchain import HuggingFaceHub
 
 #This module provides a way to interact with the operating system, such as accessing environment variables, working with files
 #and directories, executing shell commands, etc
-import pypdf
+import pyPDF2
 import os
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
