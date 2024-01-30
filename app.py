@@ -62,13 +62,11 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
 # Assigning the data inside the pdf to our variable here
 # Passing the directory to the 'load_docs' function or Get the doc
   
-if st.button("database docs"): 
-
-    directory = 'data'
-    documents = load_docs(directory)
-    st.write(len(documents))
-    docs = split_docs(documents)
-    st.write("Approx number of token", len(docs))
+directory = 'data'
+documents = load_docs(directory)
+st.write(len(documents))
+docs = split_docs(documents)
+st.write("Approx number of token", len(docs))
     
 if st.button ("upload docs"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
@@ -84,10 +82,13 @@ if st.button ("upload docs"):
 #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-embeddings = OpenAIEmbeddings()
+embed = st.button('Embedding')  
+
+if embed:
+    embeddings = OpenAIEmbeddings()
   
-#Store and Index vector space
-db = FAISS.from_documents(docs, embeddings)
+    #Store and Index vector space
+    db = FAISS.from_documents(docs, embeddings)
 
 # LLM Q&A Code
 from langchain.llms import OpenAI
