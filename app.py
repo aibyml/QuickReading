@@ -63,7 +63,7 @@ if st.button("Upload docs"):
 
    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
 
-st.write("Approx number of token", len(documents))
+#st.write("Approx number of token", len(documents))
 
 #This function will split the documents into chunks
 from langchain.text_splitter import RecursiveCharacterTextSplitter
