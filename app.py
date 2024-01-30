@@ -5,7 +5,7 @@ from langchain import HuggingFaceHub
 
 #This module provides a way to interact with the operating system, such as accessing environment variables, working with files
 #and directories, executing shell commands, etc
-from PyPDF2 import PdfReader
+import pypdf
 import os
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
@@ -59,9 +59,9 @@ def load_docspdf(directory):
 directory = 'data'
 documents = load_docs(directory)
 
-if st.button("Upload docs"): 
+#if st.button("Upload docs"): 
 
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
+#    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
 
 st.write("Approx number of token", len(documents))
 
