@@ -64,7 +64,7 @@ else:
     directory = 'data'
     documents = load_docs(directory)
 
-    #st.write("Approx number of token", len(documents))
+st.write("Approx number of token", len(documents))
 
 #This function will split the documents into chunks
 from langchain.text_splitter import RecursiveCharacterTextSplitter
