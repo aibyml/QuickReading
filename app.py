@@ -59,8 +59,8 @@ def load_docspdf(directory):
 directory = 'data'
 documents = load_docs(directory)
 
-loading = st.button("Upload docs")
-if loading: 
+st.button("Upload docs")
+if button:
     
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
     submit=st.button("Help me base on the doc to help me understand the content")
