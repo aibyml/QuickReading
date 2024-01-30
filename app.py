@@ -52,13 +52,20 @@ def load_docspdf(directory):
             loader = PyPDFDirectoryLoader(directory)
             documents = loader.load()
     return documents
-
+    
 #Assigning the data inside the pdf to our variable here
-# Passing the directory to the 'load_docs' function
+# Passing the directory to the 'load_docs' function or Get the doc
+  
 directory = 'data'
 documents = load_docs(directory)
 
-len(documents)
+loading = st.button("Upload docs")
+if loading: 
+    
+    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
+    submit=st.button("Help me base on the doc to help me understand the content")
+
+st.write("Approx number of token", len(documents))
 
 #This function will split the documents into chunks
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -78,7 +85,7 @@ docs = split_docs(documents)
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 embeddings = OpenAIEmbeddings()
-
+  
 #Store and Index vector space
 db = FAISS.from_documents(docs, embeddings)
 
