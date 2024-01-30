@@ -61,7 +61,7 @@ if st.button("database docs"):
     directory = 'data'
     documents = load_docs(directory)
 
-documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=False)
+documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
 
 #This function will split the documents into chunks
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -72,7 +72,7 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
   return docs
 
 docs = split_docs(documents)
-
+st.write("Approx number of token", len(docs))
 # Initialize the OpenAIEmbeddings object
 # Using OpenAI specified models
 #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
