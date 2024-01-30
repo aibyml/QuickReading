@@ -9,10 +9,10 @@ import pypdf
 import os
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
-st.set_page_config(page_title="Advice Seeking", page_icon=":robot:")
+st.set_page_config(page_title="Learning", page_icon=":robot:")
 st.header("Good Evening...students, this app help you to understand the content of any readings")
 st.session_state.prompt_history = []
-
+doc = []
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
         #key = st.text_input("OpenAI Key", value="", type="password")
@@ -82,7 +82,7 @@ if st.button ("upload docs"):
 #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-embed = st.button('Embedding')  
+embed = st.button("Embedding")  
 
 if embed:
     embeddings = OpenAIEmbeddings()
@@ -123,7 +123,7 @@ if "sessionMessages" not in st.session_state:
         SystemMessage(content=" It is wished we are helpful assistants.")
     ]
 input_text = get_text()
-submit = st.button('Generate')  
+submit = st.button("Submit")  
 
 if submit:
     response = get_answer(input_text)
