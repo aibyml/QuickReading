@@ -126,7 +126,7 @@ if submit:
         st.session_state.prompt_history.append(input_text + "Answer:" + response)
 
 st.subheader("Prompt history:")
-st.write(st.session_state.prompt_history())
+st.write(st.session_state.prompt_history[0:])
 
 if st.button("Clear"):
     st.session_state.prompt_history = []
