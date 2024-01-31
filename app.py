@@ -98,7 +98,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("For example: Summarise the provincial organization? ", key = input)
+    input_text = st.text_input("Prepare a set of questions for all uploaded docs or books, use the preface or chapter/sections to get the summary of the content", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - Pinecone
