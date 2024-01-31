@@ -105,7 +105,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("Use a set of questions, or get insights from the Preface or Chapter/Sections to prompt responses about content through the AI", key = input)
+    input_text = st.text_input("Prompt responses about content through the AI", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - Pinecone
@@ -135,9 +135,8 @@ if submit:
     st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
-        st.session_state.past.append(["Query: " + input_text + ";" + " Answer: " + response])
         st.session_state.generated.append(response)
-
+        st.session_state.past.append(input_text, response)
 st.subheader("Prompt history:")
 st.write(st.session_state.past)
 
