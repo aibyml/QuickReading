@@ -7,11 +7,21 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 #and directories, executing shell commands, etc
 import pypdf
 import os
+from streamlit_chat import message
+
+# Storing the prompt
+if 'generated' not in st.session_state:
+    st.session_state["generated"] = []
+
+if 'past' not in st.session_state:
+    st.session_state["past"] = []
+
+if 'input_text' not in st.session_state:
+    st.session_state["input_text"] = []
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Learning", page_icon=":robot:")
 st.header("Good Evening...students, this app help you to understand the content of any readings")
-st.session_state.prompt_history = []
 docs = []
 
 if "openai_key" not in st.session_state:
@@ -115,7 +125,12 @@ if "sessionMessages" not in st.session_state:
      st.session_state.sessionMessages = [
         SystemMessage(content= "It is wished we are helpful assistants.")
     ]
+
 input_text = get_text()
+# Save init input_text in the st.session_state.input_text.
+if len(st.session_state.input_text) == 0:
+    st.session_state.input_text = input_text
+
 submit = st.button("Submit")  
 
 if submit:
@@ -123,11 +138,12 @@ if submit:
     st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
-        st.session_state.prompt_history.append(input_text + "Answer:" + response)
+        st.session_state.past.append(["Query: " + st.session_state.input_text + "  Answer " + response)
+        st.session_state.generated.append(response)
 
 st.subheader("Prompt history:")
-st.write(st.session_state.prompt_history[0:])
+st.write(st.session_state.past)
 
 if st.button("Clear"):
-    st.session_state.prompt_history = []
+    st.session_state.past = []
     docs = None
