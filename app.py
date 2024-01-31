@@ -7,7 +7,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 #and directories, executing shell commands, etc
 import pypdf
 import os
-from streamlit_chat import message
 
 # Storing the prompt
 if 'generated' not in st.session_state:
