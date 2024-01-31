@@ -9,6 +9,7 @@ import pypdf
 import os
 
 # Storing the prompt
+i=0
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
 
@@ -136,7 +137,8 @@ if submit:
     st.write(response,key= 1)
     if response is not None:
         st.session_state.generated.append(response)
-        st.session_state.past.append(input_text, response)
+        st.session_state.past[i] = [input_text, response]
+        i = i+1
 st.subheader("Prompt history:")
 st.write(st.session_state.past)
 
