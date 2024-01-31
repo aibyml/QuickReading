@@ -138,5 +138,6 @@ st.subheader("Prompt history:")
 st.write("Query:" + st.session_state.input_text + ";" + "Response: " + st.session_state.generated)
 
 if st.button("Clear"):
-    st.session_state.past = []
+    st.session_state.input_text = []
+    st.session_state.generated = []
     docs = None
