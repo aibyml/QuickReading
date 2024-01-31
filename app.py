@@ -138,7 +138,7 @@ if submit:
     st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
-        st.session_state.past.append(["Query: " + st.session_state.input_text + "  Answer " + response)
+        st.session_state.past.append(["Query: " + st.session_state.input_text + "  Answer " + response])
         st.session_state.generated.append(response)
 
 st.subheader("Prompt history:")
