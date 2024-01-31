@@ -84,10 +84,11 @@ embeddings = OpenAIEmbeddings()
       
 #Store and Index vector space
 embed = st.button("Embedding") 
-db = {}
+#db = {}
 if embed:
     db = FAISS.from_documents(docs, embeddings)
-
+st.write(db)
+st.dtype(db)
 # LLM Q&A Code
 from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
