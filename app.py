@@ -9,12 +9,9 @@ import pypdf
 import os
 
 # Storing the prompt
-i=0
+
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
-
-if 'past' not in st.session_state:
-    st.session_state["past"] = {}
 
 if 'input_text' not in st.session_state:
     st.session_state["input_text"] = []
@@ -137,10 +134,8 @@ if submit:
     st.write(response,key= 1)
     if response is not None:
         st.session_state.generated.append(response)
-        st.session_state.past[i] = [input_text, response]
-        i = i+1
 st.subheader("Prompt history:")
-st.write(st.session_state.past)
+st.write("Query:" + st.session_state.input_text + ";" + "Response: " + st.session_state.generated)
 
 if st.button("Clear"):
     st.session_state.past = []
