@@ -135,7 +135,8 @@ if submit:
     if response is not None:
         st.session_state.generated.append(response)
 st.subheader("Prompt history:")
-st.write("Query:" + st.session_state.input_text + ";" + "Response: " + st.session_state.generated)
+st.write(st.session_state.input_text)
+st.write(st.session_state.generated)
 
 if st.button("Clear"):
     st.session_state.input_text = []
