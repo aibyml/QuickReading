@@ -126,18 +126,16 @@ if "sessionMessages" not in st.session_state:
     ]
 
 input_text = get_text()
-# Save init input_text in the st.session_state.input_text.
-if len(st.session_state.input_text) == 0:
-    st.session_state.input_text = input_text
 
 submit = st.button("Submit")  
 
 if submit:
+    st.session_state.input_text.append(input_text)
     response = get_answer(input_text)
     st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
-        st.session_state.past.append(["Query: " + st.session_state.input_text + "  Answer " + response])
+        st.session_state.past.append(["Query: " + input_text + ";" + " Answer: " + response])
         st.session_state.generated.append(response)
 
 st.subheader("Prompt history:")
