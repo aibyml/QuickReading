@@ -80,11 +80,12 @@ if st.button ("upload docs"):
 #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-embed = st.button("Embedding")  
-with embed:
-    embeddings = OpenAIEmbeddings()
+embeddings = OpenAIEmbeddings()
       
-    #Store and Index vector space
+#Store and Index vector space
+embed = st.button("Embedding") 
+db = {}
+if embed:
     db = FAISS.from_documents(docs, embeddings)
 
 # LLM Q&A Code
