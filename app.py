@@ -83,8 +83,6 @@ if st.button ("upload docs"):
 #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
 #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-
-
 # LLM Q&A Code
 from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
@@ -98,7 +96,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("Use a set of questions, or get insights from the Preface or chapter/sections to prompt the response about content through the AI", key = input)
+    input_text = st.text_input("Use a set of questions, or get insights from the Preface or Chapter/Sections to prompt responses about content through the AI", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - Pinecone
@@ -115,7 +113,7 @@ def get_answer(query):
 
 if "sessionMessages" not in st.session_state:
      st.session_state.sessionMessages = [
-        SystemMessage(content=" It is wished we are helpful assistants.")
+        SystemMessage(content= "It is wished we are helpful assistants.")
     ]
 input_text = get_text()
 submit = st.button("Submit")  
