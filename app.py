@@ -13,6 +13,7 @@ from langchain.schema import (
         HumanMessage,
         SystemMessage
     )
+from utils import *
 
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
@@ -36,7 +37,7 @@ if "sessionMessages" not in st.session_state:
 
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
-    st.session_state.df = None 
+    st.session_state.db = None 
 
 if 'input_text' not in st.session_state:
     st.session_state["input_text"] = []
@@ -77,7 +78,6 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
       docs = text_splitter.split_documents(documents)
       return docs
 
-
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
@@ -87,40 +87,45 @@ def get_text():
 # Program flow
 
 # Passing the directory to the 'load_docs' function or Get the doc
-if st.button ("$upload$ $docs$"):
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    st.session_state.df = split_docs(documents)
+
+def QA(documents):
+    st.session_state.db = split_docs(documents)
     #st.write("Approx number of token", len(docs))
-else:
-    directory = 'data'
-    documents = load_docs(directory)
-    st.session_state.df = split_docs(documents)
-    #st.write("Approx number of token", len(docs))
-
-# Assigning the data inside the pdf to our variable here
-db = embed(st.session_state.df)
-
-llm = OpenAI() 
-chain = load_qa_chain(llm, chain_type="stuff")
-
-#load the enquiry
-input_text = get_text() 
-
-#work on llm
-submit = st.button("Submit")  
-if submit:
-    st.session_state.input_text.append(input_text)
-    response = get_answer(input_text)
-    #st.subheader("Answer:")
-    st.write(response,key= 1)
-    if response is not None:
+    
+    # Assigning the data inside the pdf to our variable here
+    db = embed(st.session_state.db)
+    
+    #llm = OpenAI() 
+    #chain = load_qa_chain(llm, chain_type="stuff")
+    
+    #load the enquiry
+    input_text = get_text() 
+    
+    #work on llm
+    submit = st.button("Submit")  
+    
+    if submit:
+        st.session_state.input_text.append(input_text)
+        response = get_answer(db, input_text)
+        #st.subheader("Answer:")
+        st.write(response, key=1)
+        if response is not None:
         st.session_state.generated.append(response)
-
-st.subheader("Prompt history:")
-st.write(st.session_state.input_text)
-st.write(st.session_state.generated)
-
-if st.button("Clear"):
+    
+    st.subheader("Prompt history:")
+    st.write(st.session_state.input_text)
+    st.write(st.session_state.generated)
+    
+    if st.button("Clear"):
     st.session_state.input_text = []
     st.session_state.generated = []
-    st.session_state.df = None
+    st.session_state.db = None
+
+directory = 'data'
+documents = load_docs(directory)
+QA(documents)
+
+if st.button ("$upload$ $docs$"):
+    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    QA(documents)
+    #st.write("Approx number of token", len(docs))
