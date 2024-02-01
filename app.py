@@ -118,10 +118,10 @@ def QA(documents):
 
 load_docs = st.checkbox("$upload$ $docs$")
 if load_docs:
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    st.write(documents)
+    docs = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    st.write(docs)
     #st.write("Approx number of token", len(docs))
-    QA(documents)    
+    QA(docs)    
     
 directory = 'data'
 documents = load_docs(directory)
