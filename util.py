@@ -28,8 +28,10 @@ if "openai_key" not in st.session_state:
     st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
     #st.success('Saved API key for this session.')
 
-def embed(docs, input_text):
-    
+llm = OpenAI() 
+chain = load_qa_chain(llm, chain_type="stuff")
+
+def embed(docs):  
     # Initialize the OpenAIEmbeddings object
     # Using OpenAI specified models
     #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
@@ -38,9 +40,16 @@ def embed(docs, input_text):
     #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")    
     # LLM Q&A Code
     embeddings = OpenAIEmbeddings()
-    db = FAISS.from_documents(docs, embeddings)
+    db = FAISS.from_documents(docs, embeddings)    
+    return db
 
-    llm = OpenAI() 
-    chain = load_qa_chain(llm, chain_type="stuff")
+def get_similiar_docs(input_text, k=2):
+    similar_docs = db.similarity_search(input_text, k=k)
+    return similar_docs
 
+# This function will help us get the answer from the relevant docs matching input text
+def get_answer(input_text):
+    similar_docs = get_similiar_docs(input_text)
+    print(similar_docs)
+    response = chain.run(input_documents=similar_docs, question=input_text)
     return response
