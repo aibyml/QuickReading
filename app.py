@@ -28,7 +28,7 @@ from langchain.vectorstores import FAISS
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Learning", page_icon=":robot:")
 st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning when needed")
-Yes
+
 if "sessionMessages" not in st.session_state:
     st.session_state.sessionMessages = [
         SystemMessage(content= "It is wished we are helpful assistants.")
