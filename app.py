@@ -72,7 +72,7 @@ documents = load_docs(directory)
 docs = split_docs(documents)
 #st.write("Approx number of token", len(docs))
 
-if st.button ("$upload docs$"):
+if st.button ("$upload$ $docs$"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
     docs = split_docs(documents)
     #st.write("Approx number of token", len(docs))
@@ -100,7 +100,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("$Prompt responses about content through the AI$", key = input)
+    input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - FAISS
