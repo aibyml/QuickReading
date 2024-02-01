@@ -71,13 +71,12 @@ directory = 'data'
 documents = load_docs(directory)
 docs = split_docs(documents)
 #st.write("Approx number of token", len(docs))
-embeddings = OpenAIEmbeddings()
-db = FAISS.from_documents(docs, embeddings)
 
-st.button ("upload docs"):
-documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-docs = split_docs(documents)
-#st.write("Approx number of token", len(docs))
+if st.button ("upload docs"):
+    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    docs = split_docs(documents)
+    #st.write("Approx number of token", len(docs))
+
 embeddings = OpenAIEmbeddings()
 db = FAISS.from_documents(docs, embeddings)
 
