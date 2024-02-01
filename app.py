@@ -36,11 +36,10 @@ if "sessionMessages" not in st.session_state:
 
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
+    st.session_state.df = None 
 
 if 'input_text' not in st.session_state:
     st.session_state["input_text"] = []
-
-docs = []
 
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
@@ -113,16 +112,16 @@ def get_answer(query):
 # Passing the directory to the 'load_docs' function or Get the doc
 if st.button ("$upload$ $docs$"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    docs = split_docs(documents)
+    st.session_state.df = split_docs(documents)
     #st.write("Approx number of token", len(docs))
 else:
     directory = 'data'
     documents = load_docs(directory)
-    docs = split_docs(documents)
+    st.session_state.df = split_docs(documents)
     #st.write("Approx number of token", len(docs))
 
 # Assigning the data inside the pdf to our variable here
-db = embed(docs)
+db = embed(st.session_state.df)
 
 llm = OpenAI() 
 chain = load_qa_chain(llm, chain_type="stuff")
@@ -147,4 +146,4 @@ st.write(st.session_state.generated)
 if st.button("Clear"):
     st.session_state.input_text = []
     st.session_state.generated = []
-    docs = None
+    st.session_state.df = None
