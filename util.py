@@ -18,6 +18,8 @@ from langchain.embeddings import OpenAIEmbeddings
 #clustering of large-scale datasets, particularly with high-dimensional vectors. 
 #It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
 from langchain.vectorstores import FAISS
+from langchain.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
 
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
@@ -25,11 +27,6 @@ if "openai_key" not in st.session_state:
     #if st.form_submit_button("Submit"):
     st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
     #st.success('Saved API key for this session.')
-
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
-from langchain.document_loaders import PyPDFDirectoryLoader
-
 
 def embed(docs, input_text):
     
@@ -45,3 +42,5 @@ def embed(docs, input_text):
 
     llm = OpenAI() 
     chain = load_qa_chain(llm, chain_type="stuff")
+
+    return response
