@@ -43,13 +43,13 @@ def embed(docs):
     db = FAISS.from_documents(docs, embeddings)    
     return db
 
-def get_similiar_docs(input_text, k=2):
+def get_similiar_docs(db, input_text, k=2):
     similar_docs = db.similarity_search(input_text, k=k)
     return similar_docs
 
 # This function will help us get the answer from the relevant docs matching input text
-def get_answer(input_text):
-    similar_docs = get_similiar_docs(input_text)
+def get_answer(db, input_text):
+    similar_docs = get_similiar_docs(db,input_text)
     print(similar_docs)
     response = chain.run(input_documents=similar_docs, question=input_text)
     return response
