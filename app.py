@@ -117,9 +117,9 @@ def QA(documents):
     st.write(st.session_state.generated)
     
     if st.button("Clear"):
-    st.session_state.input_text = []
-    st.session_state.generated = []
-    st.session_state.db = None
+        st.session_state.input_text = []
+        st.session_state.generated = []
+        st.session_state.db = None
 
 directory = 'data'
 documents = load_docs(directory)
