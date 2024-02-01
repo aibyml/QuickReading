@@ -3,10 +3,16 @@
 import streamlit as st
 from langchain import HuggingFaceHub
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 #This module provides a way to interact with the operating system, such as accessing environment variables, working with files
 #and directories, executing shell commands, etc
 import pypdf
 import os
+from langchain.schema import (
+        AIMessage,
+        HumanMessage,
+        SystemMessage
+    )
 
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
@@ -19,27 +25,35 @@ from langchain.embeddings import OpenAIEmbeddings
 #It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
 from langchain.vectorstores import FAISS
 
+#By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
+st.set_page_config(page_title="Learning", page_icon=":robot:")
+st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning when needed")
+Yes
+if "sessionMessages" not in st.session_state:
+    st.session_state.sessionMessages = [
+        SystemMessage(content= "It is wished we are helpful assistants.")
+    ]
+
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
 
 if 'input_text' not in st.session_state:
     st.session_state["input_text"] = []
 
-#By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
-st.set_page_config(page_title="Learning", page_icon=":robot:")
-st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning when needed")
 docs = []
 
 if "openai_key" not in st.session_state:
     #with st.form("API key"):
-        #key = st.text_input("OpenAI Key", value="", type="password")
-        #if st.form_submit_button("Submit"):
-   st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
-            #st.success('Saved API key for this session.')
+    #key = st.text_input("OpenAI Key", value="", type="password")
+    #if st.form_submit_button("Submit"):
+    st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
+    #st.success('Saved API key for this session.')
 
-#The below snippet helps us to import structured pdf file data for our tasks
+from langchain.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
 from langchain.document_loaders import PyPDFDirectoryLoader
 
+#The below snippet helps us to import structured pdf file data for our tasks
 def load_docs(directory):
     for filename in os.listdir(directory):
         # Loads PDF files available in a directory with pypdf
@@ -64,46 +78,24 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
       docs = text_splitter.split_documents(documents)
       return docs
 
-# Assigning the data inside the pdf to our variable here
-# Passing the directory to the 'load_docs' function or Get the doc
-  
-directory = 'data'
-documents = load_docs(directory)
-docs = split_docs(documents)
-#st.write("Approx number of token", len(docs))
-
-if st.button ("$upload$ $docs$"):
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    docs = split_docs(documents)
-    #st.write("Approx number of token", len(docs))
-
-embeddings = OpenAIEmbeddings()
-db = FAISS.from_documents(docs, embeddings)
-
-# Initialize the OpenAIEmbeddings object
-# Using OpenAI specified models
-#embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
-# OR Using Hugging Face LLM for creating Embeddings for documents/Text
-#from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
-#embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-
-# LLM Q&A Code
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
-from langchain.schema import (
-    AIMessage,
-    HumanMessage,
-    SystemMessage
-)
-llm = OpenAI()
-chain = load_qa_chain(llm, chain_type="stuff")
+def embed(docs)
+    # Initialize the OpenAIEmbeddings object
+    # Using OpenAI specified models
+    #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
+    # OR Using Hugging Face LLM for creating Embeddings for documents/Text
+    #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
+    #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")    
+    # LLM Q&A Code
+    embeddings = OpenAIEmbeddings()
+    db = FAISS.from_documents(docs, embeddings)
+    return db
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
     return input_text
 
-#This function will help us in fetching the top k relevent documents from our vector store - FAISS
+Delete yeah tongue Leila#This function will help us in fetching the top k relevent documents from our vector store - FAISS
 def get_similiar_docs(query, k=2):
     similar_docs = db.similarity_search(query, k=k)
     return similar_docs
@@ -115,15 +107,31 @@ def get_answer(query):
   response = chain.run(input_documents=relevant_docs, question=query)
   return response
 
-if "sessionMessages" not in st.session_state:
-     st.session_state.sessionMessages = [
-        SystemMessage(content= "It is wished we are helpful assistants.")
-    ]
+    
+# Program flow
 
-input_text = get_text()
+# Passing the directory to the 'load_docs' function or Get the doc
+if st.button ("$upload$ $docs$"):
+    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    docs = split_docs(documents)
+    #st.write("Approx number of token", len(docs))
+else:
+    directory = 'data'
+    documents = load_docs(directory)
+    docs = split_docs(documents)
+    #st.write("Approx number of token", len(docs))
 
+# Assigning the data inside the pdf to our variable here
+db = embed(docs)
+
+llm = OpenAI() 
+chain = load_qa_chain(llm, chain_type="stuff")
+
+#load the enquiry
+input_text = get_text() 
+
+#work on llm
 submit = st.button("Submit")  
-
 if submit:
     st.session_state.input_text.append(input_text)
     response = get_answer(input_text)
@@ -131,9 +139,11 @@ if submit:
     st.write(response,key= 1)
     if response is not None:
         st.session_state.generated.append(response)
+
 st.subheader("Prompt history:")
 st.write(st.session_state.input_text)
 st.write(st.session_state.generated)
+
 if st.button("Clear"):
     st.session_state.input_text = []
     st.session_state.generated = []
