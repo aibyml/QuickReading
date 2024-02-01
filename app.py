@@ -95,7 +95,7 @@ def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
     return input_text
 
-Delete yeah tongue Leila#This function will help us in fetching the top k relevent documents from our vector store - FAISS
+#This function will help us in fetching the top k relevent documents from our vector store - FAISS
 def get_similiar_docs(query, k=2):
     similar_docs = db.similarity_search(query, k=k)
     return similar_docs
