@@ -120,15 +120,17 @@ directory = 'data'
 documents = load_docs(directory)
 QA(documents)
 
-load_docs = st.checkbox("$upload$ $docs$")
-if load_docs:
-    docs = None
-    docs = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    if docs is not None:
-        st.write(docs)
-        st.session_state.input_text = []
-        st.session_state.generated = []
-        st.session_state.db = None    
-        #st.write("Approx number of token", len(docs))
-        QA(docs)    
+if st.session_state.input_text is not None:
+    load_docs = st.checkbox("$upload$ $docs$")
+    if load_docs:
+        docs = None
+        docs = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+        if docs is not None:
+            #st.write(docs)
+            st.session_state.input_text = []
+            st.session_state.generated = []
+            st.session_state.db = None    
+            #st.write("Approx number of token", len(docs))
+            if st.button("Go to gallery"): 
+                QA(docs)    
     
