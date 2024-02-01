@@ -130,7 +130,7 @@ submit = st.button("Submit")
 if submit:
     st.session_state.input_text.append(input_text)
     response = get_answer(input_text)
-    st.subheader("Answer:")
+    #st.subheader("Answer:")
     st.write(response,key= 1)
     if response is not None:
         st.session_state.generated.append(response)
