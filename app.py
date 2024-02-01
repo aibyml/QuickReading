@@ -123,4 +123,5 @@ QA(documents)
 if st.button ("$upload$ $docs$"):
     doc = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
     st.write(doc)
+    st.write(documents)
     #st.write("Approx number of token", len(docs))
