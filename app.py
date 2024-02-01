@@ -78,7 +78,7 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
       docs = text_splitter.split_documents(documents)
       return docs
 
-def embed(docs)
+def embed(docs):
     # Initialize the OpenAIEmbeddings object
     # Using OpenAI specified models
     #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
