@@ -78,6 +78,14 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
       docs = text_splitter.split_documents(documents)
       return docs
 
+def extract_data(feed):
+    data = []
+    with pdfplumber.load(feed) as pdf:
+        pages = pdf.pages
+        for p in pages:
+            data.append(p.extract_tables())
+    return None
+
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
@@ -126,11 +134,12 @@ if st.session_state.input_text is not None:
         docs = None
         docs = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
         if docs is not None:
-            #st.write(docs)
-            st.session_state.input_text = []
-            st.session_state.generated = []
-            st.session_state.db = None    
-            #st.write("Approx number of token", len(docs))
-            if st.button("Go to gallery"): 
-                QA(docs)    
+                #st.write(docs)
+                st.session_state.input_text = []
+                st.session_state.generated = []
+                st.session_state.db = None    
+                df = extract_data(docs)
+                #st.write("Approx number of token", len(docs))
+                if st.button("Learn the content"): 
+                        QA(docs)    
     
