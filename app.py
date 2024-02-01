@@ -83,11 +83,6 @@ def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
     return input_text
 
-
-# Program flow
-
-# Passing the directory to the 'load_docs' function or Get the doc
-
 def QA(documents):
     st.session_state.db = split_docs(documents)
     #st.write("Approx number of token", len(docs))
@@ -126,6 +121,6 @@ documents = load_docs(directory)
 QA(documents)
 
 if st.button ("$upload$ $docs$"):
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    QA(documents)
+    doc = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+    st.write(doc)
     #st.write("Approx number of token", len(docs))
