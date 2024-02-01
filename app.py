@@ -13,7 +13,7 @@ from langchain.schema import (
         HumanMessage,
         SystemMessage
     )
-from utils import *
+from util import *
 
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
@@ -110,7 +110,7 @@ def QA(documents):
         #st.subheader("Answer:")
         st.write(response, key=1)
         if response is not None:
-        st.session_state.generated.append(response)
+            st.session_state.generated.append(response)
     
     st.subheader("Prompt history:")
     st.write(st.session_state.input_text)
