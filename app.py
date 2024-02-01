@@ -27,7 +27,7 @@ if 'input_text' not in st.session_state:
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Learning", page_icon=":robot:")
-st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning")
+st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning when needed")
 docs = []
 
 if "openai_key" not in st.session_state:
@@ -100,7 +100,7 @@ chain = load_qa_chain(llm, chain_type="stuff")
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
-    input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$", key = input)
+    input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
     return input_text
 
 #This function will help us in fetching the top k relevent documents from our vector store - FAISS
