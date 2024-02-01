@@ -27,7 +27,7 @@ if 'input_text' not in st.session_state:
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Learning", page_icon=":robot:")
-st.header("Good Evening...students, this app help you to understand the content of any readings")
+st.header("Hi...students, this app help you to write your (research) paper, ask me how to use this app to speed up the learning")
 docs = []
 
 if "openai_key" not in st.session_state:
