@@ -17,13 +17,13 @@ from langchain.schema import (
 # An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
 # Small distances suggest high relatedness and large distances suggest low relatedness.
 # Generate Text Embedding using different LLM
-from langchain.embeddings import OpenAIEmbeddings
+##from langchain.embeddings import OpenAIEmbeddings
 #from langchain.embeddings.openai import OpenAIEmbeddings
 
 #FAISS is an open-source library developed by Facebook AI Research for efficient similarity search and 
 #clustering of large-scale datasets, particularly with high-dimensional vectors. 
 #It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
-from langchain.vectorstores import FAISS
+##from langchain.vectorstores import FAISS
 
 #By st.set_page_config(), you can customize the appearance of your Streamlit application's web page
 st.set_page_config(page_title="Learning", page_icon=":robot:")
@@ -48,8 +48,8 @@ if "openai_key" not in st.session_state:
     st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
     #st.success('Saved API key for this session.')
 
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
+##from langchain.llms import OpenAI
+##from langchain.chains.question_answering import load_qa_chain
 from langchain.document_loaders import PyPDFDirectoryLoader
 
 #The below snippet helps us to import structured pdf file data for our tasks
@@ -77,36 +77,13 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
       docs = text_splitter.split_documents(documents)
       return docs
 
-def embed(docs):
-    # Initialize the OpenAIEmbeddings object
-    # Using OpenAI specified models
-    #embeddings = OpenAIEmbeddings(model_name="text-embedding-ada-002")  
-    # OR Using Hugging Face LLM for creating Embeddings for documents/Text
-    #from langchain.embeddings import HuggingFaceEmbeddings, SentenceTransformerEmbeddings
-    #embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")    
-    # LLM Q&A Code
-    embeddings = OpenAIEmbeddings()
-    db = FAISS.from_documents(docs, embeddings)
-    return db
 
 # This function will transform the question that we raise into input text to search relevant docs
 def get_text():
     input_text = st.text_input("$Prompt$ $responses$ $about$ $content$ $through$ $the$ $AI$ 👇", key = input)
     return input_text
 
-#This function will help us in fetching the top k relevent documents from our vector store - FAISS
-def get_similiar_docs(query, k=2):
-    similar_docs = db.similarity_search(query, k=k)
-    return similar_docs
 
-# This function will help us get the answer from the relevant docs matching input text
-def get_answer(query):
-  relevant_docs = get_similiar_docs(query)
-  print(relevant_docs)
-  response = chain.run(input_documents=relevant_docs, question=query)
-  return response
-
-    
 # Program flow
 
 # Passing the directory to the 'load_docs' function or Get the doc
