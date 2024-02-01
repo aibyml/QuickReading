@@ -116,7 +116,7 @@ def QA(documents):
         st.session_state.generated = []
         st.session_state.db = None
 
-with st.button ("$upload$ $docs$"):
+with st.button("$upload$ $docs$"):
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
     st.write(documents)
     #st.write("Approx number of token", len(docs))
