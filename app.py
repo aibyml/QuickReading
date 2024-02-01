@@ -116,7 +116,7 @@ def QA(documents):
         st.session_state.generated = []
         st.session_state.db = None
 
-load_docs = st.check("$upload$ $docs$"):
+load_docs = st.check("$upload$ $docs$")
 if load_docs:
     documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
     st.write(documents)
