@@ -8,7 +8,16 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import pypdf
 import os
 
-# Storing the prompt
+# An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
+# Small distances suggest high relatedness and large distances suggest low relatedness.
+# Generate Text Embedding using different LLM
+from langchain.embeddings import OpenAIEmbeddings
+#from langchain.embeddings.openai import OpenAIEmbeddings
+
+#FAISS is an open-source library developed by Facebook AI Research for efficient similarity search and 
+#clustering of large-scale datasets, particularly with high-dimensional vectors. 
+#It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
+from langchain.vectorstores import FAISS
 
 if 'generated' not in st.session_state:
     st.session_state["generated"] = []
@@ -27,18 +36,6 @@ if "openai_key" not in st.session_state:
         #if st.form_submit_button("Submit"):
    st.session_state.openai_key = os.environ["OPENAI_API_KEY"]
             #st.success('Saved API key for this session.')
-
-# An embedding is a vector (list) of floating point numbers. The distance between two vectors measures their relatedness. 
-# Small distances suggest high relatedness and large distances suggest low relatedness.
-# Generate Text Embedding using different LLM
-from langchain.llms import OpenAI
-from langchain.embeddings import OpenAIEmbeddings
-#from langchain.embeddings.openai import OpenAIEmbeddings
-
-#FAISS is an open-source library developed by Facebook AI Research for efficient similarity search and 
-#clustering of large-scale datasets, particularly with high-dimensional vectors. 
-#It provides optimized indexing structures and algorithms for tasks like nearest neighbor search and recommendation systems.
-from langchain.vectorstores import FAISS
 
 #The below snippet helps us to import structured pdf file data for our tasks
 from langchain.document_loaders import PyPDFDirectoryLoader
@@ -73,15 +70,16 @@ def split_docs(documents, chunk_size=3000, chunk_overlap=20):
 directory = 'data'
 documents = load_docs(directory)
 docs = split_docs(documents)
+#st.write("Approx number of token", len(docs))
 embeddings = OpenAIEmbeddings()
 db = FAISS.from_documents(docs, embeddings)
 
-if st.button ("upload docs"):
-    documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
-    docs = split_docs(documents)
-    st.write("Approx number of token", len(docs))
-    embeddings = OpenAIEmbeddings()
-    db = FAISS.from_documents(docs, embeddings)
+st.button ("upload docs"):
+documents = st.file_uploader("Upload documents here, only PDF file allowed", type=["pdf"], accept_multiple_files=True)
+docs = split_docs(documents)
+#st.write("Approx number of token", len(docs))
+embeddings = OpenAIEmbeddings()
+db = FAISS.from_documents(docs, embeddings)
 
 # Initialize the OpenAIEmbeddings object
 # Using OpenAI specified models
@@ -106,7 +104,7 @@ def get_text():
     input_text = st.text_input("Prompt responses about content through the AI", key = input)
     return input_text
 
-#This function will help us in fetching the top k relevent documents from our vector store - Pinecone
+#This function will help us in fetching the top k relevent documents from our vector store - FAISS
 def get_similiar_docs(query, k=2):
     similar_docs = db.similarity_search(query, k=k)
     return similar_docs
@@ -135,7 +133,8 @@ if submit:
     if response is not None:
         st.session_state.generated.append(response)
 st.subheader("Prompt history:")
-
+st.write(st.session_state.input_text)
+st.write(st.session_state.generated)
 if st.button("Clear"):
     st.session_state.input_text = []
     st.session_state.generated = []
